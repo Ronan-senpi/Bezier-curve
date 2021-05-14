@@ -9,13 +9,13 @@ public class GameManager : MonoBehaviour
     {
         get
         {
-            if(instance == null) instance = FindObjectOfType<GameManager>();
+            if (instance == null) instance = FindObjectOfType<GameManager>();
             return instance;
         }
     }
 
-    [SerializeField] private List<BezierCurve> listCurves = new List<BezierCurve>();
-    [SerializeField] private List<Vector3> selectedPoints;
+    public List<GameObject> listCurves = new List<GameObject>();
+    public List<Vector3> selectedPoints;
 
     [Header("Parameters")]
     [Range(0.00000001f, 1.0f)]
@@ -23,18 +23,28 @@ public class GameManager : MonoBehaviour
     public float Step { get => m_step; set => m_step = value; }
     [SerializeField] private PrimitiveType m_drawer;
 
+    public int selectedCurve = 0;
+
     public void GenerateCurve()
     {
         GameObject curveObject = new GameObject();
         BezierCurve newCurve = curveObject.AddComponent<BezierCurve>();
         newCurve.CreateCurve(selectedPoints, m_step, m_drawer);
-        listCurves.Add(newCurve);
+        listCurves.Add(curveObject);
+        selectedCurve = listCurves.Count - 1;
         selectedPoints.Clear();
     }
 
-    public void RemoveCurveAt(int index)
+    public void RemoveSelectedCurve()
     {
-        listCurves.RemoveAt(index);
+        if (listCurves.Count > 0)
+        {
+            GameObject curveToDestroy = listCurves[selectedCurve];
+            listCurves.RemoveAt(selectedCurve);
+            Destroy(curveToDestroy);
+            selectedCurve = Mathf.Clamp(selectedCurve, 0, listCurves.Count - 1);
+        }
+
     }
 
     public void SelectPoint(Vector3 point)
@@ -64,6 +74,25 @@ public class GameManager : MonoBehaviour
                 m_step -= 0.1f;
                 Debug.Log("Decrease");
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            if (selectedCurve > 0)
+                selectedCurve--;
+            else
+                selectedCurve = listCurves.Count - 1;
+        }
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (selectedCurve < listCurves.Count - 1)
+                selectedCurve++;
+            else
+                selectedCurve = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            RemoveSelectedCurve();
         }
     }
 }
