@@ -13,9 +13,11 @@ public class BezierCurve : MonoBehaviour
 
     private List<Vector3> curvePoints;
 
+    public float Step { get => step; set => step = value; }
+
     private void Awake()
     {
-        curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(controlPoints, step);
+        curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(controlPoints, Step);
         GameObject go = GameObject.CreatePrimitive(drawer);
         foreach (Vector3 point in curvePoints)
         {
