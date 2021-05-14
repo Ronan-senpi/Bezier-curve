@@ -1,6 +1,9 @@
 # Bezier-curve
 Bézier curve
 
+
+![drag image](.gitressources\GIF\bezier.gif)
+
 :o: done :pushpin: in progress :x: cancel
 
 1) Cliquer n+1 points de contrôle à l'écran et afficher le polygone de controle
