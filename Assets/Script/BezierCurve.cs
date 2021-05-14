@@ -12,6 +12,8 @@ public class BezierCurve : MonoBehaviour
     private ControlPointController dragControlPointIndex;
     private List<Vector3> curvePoints;
 
+    public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
+
     private void Awake()
     {
         if (!TryGetComponent(out curveLr))
