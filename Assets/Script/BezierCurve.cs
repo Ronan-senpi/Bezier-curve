@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BezierCurve : MonoBehaviour
 {
-    private LineRenderer curveLr; 
+    private LineRenderer curveLr;
     private LineRenderer controlLr;
     [SerializeField] private GameObject ControlPointGo;
     [SerializeField] private List<Vector3> controlPoints;
@@ -48,13 +48,12 @@ public class BezierCurve : MonoBehaviour
 
     private void ShowControlPoint()
     {
-        //GameObject go = GameObject.CreatePrimitive(drawer);
-        for (int i = 0; i < controlPoints.Count; i++) { 
+        for (int i = 0; i < controlPoints.Count; i++)
+        {
             GameObject go = Instantiate(ControlPointGo, controlPoints[i], Quaternion.identity, transform);
             ControlPointController cpc = go.GetComponent<ControlPointController>();
             cpc.Index = i;
         }
-        //Destroy(go);
     }
     private void ShowCurve()
     {
@@ -63,14 +62,16 @@ public class BezierCurve : MonoBehaviour
         {
             curveLr.SetPosition(i, curvePoints[i]);
         }
-
+    }
+    private void ShowControlCurve()
+    {
         controlLr.positionCount = controlPoints.Count;
         for (int i = 0; i < controlPoints.Count; i++)
         {
-            Debug.Log(controlPoints[i]);
             controlLr.SetPosition(i, controlPoints[i]);
         }
     }
+
     void RemoveCurvePointData()
     {
         curvePoints = new List<Vector3>();
@@ -82,7 +83,7 @@ public class BezierCurve : MonoBehaviour
         ControlPointController cpc;
         for (int i = 0; i < transform.childCount; i++)
         {
-            if(transform.GetChild(i).TryGetComponent(out cpc))
+            if (transform.GetChild(i).TryGetComponent(out cpc))
             {
                 cpc.Destroy();
             }
@@ -95,7 +96,8 @@ public class BezierCurve : MonoBehaviour
     {
         if (Input.GetMouseButtonUp(0))
         {
-
+            dragControlPointIndex = null;
+            DrawCurve();
         }
         if (Input.GetMouseButtonDown(0))
         {
@@ -106,8 +108,9 @@ public class BezierCurve : MonoBehaviour
                 if ((controlPointLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
                 {
                     Debug.Log(hit.collider.gameObject.layer);
+
                     ControlPointController cpc;
-                    if(hit.collider.gameObject.TryGetComponent(out cpc))
+                    if (hit.collider.gameObject.TryGetComponent(out cpc))
                     {
                         dragControlPointIndex = cpc;
                     }
@@ -115,15 +118,8 @@ public class BezierCurve : MonoBehaviour
             }
             else
             {
-                controlPoints.Add(getWorldPos());
-                if (controlPoints != null && controlPoints.Count > 0)
-                {
-                    RemoveCurvePoint();
-                    curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(new List<Vector3>(controlPoints), step);
-                    ShowControlPoint();
-                    ShowCurve();
-                    dragControlPointIndex = null;
-                }
+                controlPoints.Add(GetWorldPos());
+                DrawCurve();
             }
         }
 
@@ -133,21 +129,43 @@ public class BezierCurve : MonoBehaviour
         //    RemoveCurvePointData();
         //}
 
-        DagControlPoint();
+        DragControlPoint();
     }
 
-    public Vector3 getWorldPos()
+
+    void DrawCurve(bool RemoveControl = true)
+    {
+        if (controlPoints != null && controlPoints.Count > 0)
+        {
+            if (RemoveControl)
+                RemoveCurvePoint();
+            curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(new List<Vector3>(controlPoints), step);
+            if (RemoveControl)
+                ShowControlPoint();
+            ShowCurve();
+            ShowControlCurve();
+        }
+    }
+
+    public Vector3 GetWorldPos()
     {
         Vector3 mousePos = Input.mousePosition;
         mousePos.z = 10;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
         return worldPosition;
     }
-    void DagControlPoint()
+    void DragControlPoint()
     {
         if (dragControlPointIndex != null)
-            controlPoints[dragControlPointIndex.Index] = getWorldPos();
+        {
+            dragControlPointIndex.transform.position = GetWorldPos();
+            controlLr.SetPosition(dragControlPointIndex.Index, GetWorldPos());
+            controlPoints[dragControlPointIndex.Index] = GetWorldPos();
+            DrawCurve(false);
+        }
     }
+
+
     [SerializeField] private List<Vector3> m_controlPoints;
     private List<Vector3> m_curvePoints;
 
