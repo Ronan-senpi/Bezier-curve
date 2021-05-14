@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class ChangeStep : MonoBehaviour
 {
-    float step;
+    private BezierCurve bezier;
 
     private void Start()
     {
-        step = FindObjectOfType<BezierCurve>().Step;
+        bezier = FindObjectOfType<BezierCurve>();
     }
 
     // Update is called once per frame
@@ -16,16 +16,16 @@ public class ChangeStep : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
-            if (step <= 0.9f)
+            if (bezier.Step <= 0.9f)
             {
-                step += 0.1f;
+                bezier.Step += 0.1f;
                 Debug.Log("Increase");
             }
         }
         if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
-            if (step > 0.1f) {
-                step -= 0.1f;
+            if (bezier.Step >= 0.2f) {
+                bezier.Step -= 0.1f;
                 Debug.Log("Decrease");
             }
         }
