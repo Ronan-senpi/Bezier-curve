@@ -5,19 +5,14 @@ using UnityEngine;
 public class BezierCurve : MonoBehaviour
 {
 
-    [SerializeField] private List<Vector3> controlPoints;
-    [Header("Parameters")]
-    [Range(0.00000001f,1.0f)]
-    [SerializeField] private float step;
-    [SerializeField] private PrimitiveType drawer;
+    [SerializeField] private List<Vector3> m_controlPoints;
+    private List<Vector3> m_curvePoints;
 
-    private List<Vector3> curvePoints;
-
-    private void Awake()
-    {
-        curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(controlPoints, step);
+    public void CreateCurve(List<Vector3> controlPoints, float step, PrimitiveType drawer){
+        m_controlPoints=controlPoints;
+        m_curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(m_controlPoints, step);
         GameObject go = GameObject.CreatePrimitive(drawer);
-        foreach (Vector3 point in curvePoints)
+        foreach (Vector3 point in m_curvePoints)
         {
             Instantiate(go, point, Quaternion.identity, transform);
         }

@@ -2,17 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class GetScreenClickPosition : MonoBehaviour
 {
     [SerializeField]
-    PrimitiveType drawer;
     GameObject go;
 
-    private void Awake()
-    {
-        go = GameObject.CreatePrimitive(drawer);
-    }
     // Update is called once per frame
     void Update()
     {
@@ -20,7 +14,8 @@ public class GetScreenClickPosition : MonoBehaviour
         {
             if (go != null)
             {
-                Instantiate(go, getWorldPos(), Quaternion.identity);
+                go = Instantiate(go, getWorldPos(), Quaternion.identity);
+                GameManager.Instance.SelectPoint(go.transform.position);
             }
         }
     }
