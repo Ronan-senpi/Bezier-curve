@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Material selectMaterial;
     [SerializeField] private Material unselectMaterial;
-
+    [SerializeField] private Slider sliderStep;
     public void SaveCurveAndStartNew()
     {
         BezierCurve currentCurve = Instantiate(bezierCurvePrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BezierCurve>();
@@ -57,22 +58,24 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
-        {
-            if (m_step <= 0.9f)
-            {
-                m_step += 0.1f;
-                Debug.Log("Increase");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
-        {
-            if (m_step >= 0.2f)
-            {
-                m_step -= 0.1f;
-                Debug.Log("Decrease");
-            }
-        }
+        //if (Input.GetKeyDown(KeyCode.KeypadPlus))
+        //{
+        //    if (m_step <= 0.9f)
+        //    {
+        //        m_step += 0.1f;
+        //        Debug.Log("Increase");
+        //    }
+        //}
+        //if (Input.GetKeyDown(KeyCode.KeypadMinus))
+        //{
+        //    if (m_step >= 0.2f)
+        //    {
+        //        m_step -= 0.1f;
+        //        Debug.Log("Decrease");
+        //    }
+        //}
+
+        m_step = sliderStep.value;
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
