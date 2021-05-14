@@ -8,7 +8,7 @@ public class BezierCurve : MonoBehaviour
     private LineRenderer controlLr;
     [SerializeField] private GameObject ControlPointGo;
     [SerializeField] private List<Vector3> controlPoints;
-    [Header("Parameters Bézier")]
+    [Header("Parameters Bï¿½zier")]
     [Range(0.00000001f, 1.0f)]
     [SerializeField] private float step;
     [SerializeField] private PrimitiveType drawer;
@@ -146,10 +146,20 @@ public class BezierCurve : MonoBehaviour
     void DagControlPoint()
     {
         if (dragControlPointIndex != null)
-        {
-            
             controlPoints[dragControlPointIndex.Index] = getWorldPos();
+    }
+    [SerializeField] private List<Vector3> m_controlPoints;
+    private List<Vector3> m_curvePoints;
 
+    public void CreateCurve(List<Vector3> controlPoints, float step, PrimitiveType drawer)
+    {
+        m_controlPoints = controlPoints;
+        m_curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(m_controlPoints, step);
+        GameObject go = GameObject.CreatePrimitive(drawer);
+        foreach (Vector3 point in m_curvePoints)
+        {
+            Instantiate(go, point, Quaternion.identity, transform);
         }
+        Destroy(go);
     }
 }
