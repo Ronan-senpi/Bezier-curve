@@ -27,12 +27,16 @@ public class GameManager : MonoBehaviour
     public GameObject ControlPointGo { get { return controlPointGo; } }
     public int selectedCurve = 0;
 
+    [SerializeField] private Material selectMaterial;
+    [SerializeField] private Material unselectMaterial;
+
     public void SaveCurveAndStartNew()
     {
         BezierCurve currentCurve = Instantiate(bezierCurvePrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BezierCurve>();
         if (selectedCurve < listCurves.Count && listCurves.Count > 0)
         {
             listCurves[selectedCurve].enabled = false;
+            listCurves[selectedCurve].OnSelectionChange(unselectMaterial);
         }
         listCurves.Add(currentCurve);
         selectedCurve = listCurves.Count - 1;
@@ -72,17 +76,25 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            listCurves[selectedCurve].OnSelectionChange(unselectMaterial);
+            listCurves[selectedCurve].enabled = false;
             if (selectedCurve > 0)
                 selectedCurve--;
             else
                 selectedCurve = listCurves.Count - 1;
+            listCurves[selectedCurve].OnSelectionChange(selectMaterial);
+            listCurves[selectedCurve].enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
+            listCurves[selectedCurve].OnSelectionChange(unselectMaterial);
+            listCurves[selectedCurve].enabled = false;
             if (selectedCurve < listCurves.Count - 1)
                 selectedCurve++;
             else
                 selectedCurve = 0;
+            listCurves[selectedCurve].OnSelectionChange(selectMaterial);
+            listCurves[selectedCurve].enabled = true;
         }
         if (Input.GetKeyDown(KeyCode.Delete))
         {

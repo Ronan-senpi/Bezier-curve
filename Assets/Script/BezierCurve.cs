@@ -8,10 +8,7 @@ public class BezierCurve : MonoBehaviour
     private LineRenderer curveLr;
     private LineRenderer controlLr;
     [SerializeField] private List<Vector3> controlPoints;
-
-
     [SerializeField] private LayerMask controlPointLayer;
-
     private ControlPointController dragControlPointIndex;
     private List<Vector3> curvePoints;
 
@@ -175,5 +172,19 @@ public class BezierCurve : MonoBehaviour
         List<RaycastResult> results = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
         return results.Count > 0;
+    }
+
+    public void OnSelectionChange(Material mat)
+    {
+        if (transform.childCount > 1)
+        {
+            Debug.Log("On est la");
+            for (int i = 1; i < transform.childCount; i++)
+            {
+                Renderer renderer = transform.GetChild(i).GetComponent<Renderer>();
+                renderer.sharedMaterial = mat;
+            }
+        }
+
     }
 }
