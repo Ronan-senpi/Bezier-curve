@@ -14,47 +14,41 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public List<GameObject> listCurves = new List<GameObject>();
-    public List<Vector3> selectedPoints;
+    public List<BezierCurve> listCurves = new List<BezierCurve>();
 
     [Header("Parameters")]
-    [Range(0.00000001f, 1.0f)]
+    [SerializeField] private GameObject bezierCurvePrefab;
+    [Range(0.001f, 1.0f)]
     [SerializeField] private float m_step;
     public float Step { get => m_step; set => m_step = value; }
-    [SerializeField] private PrimitiveType m_drawer;
-
+    [SerializeField] private float rayDistance = 100f;
+    public float RayDistance { get { return rayDistance; } }
+    [SerializeField] private GameObject controlPointGo;
+    public GameObject ControlPointGo { get { return controlPointGo; } }
     public int selectedCurve = 0;
 
-    public void GenerateCurve()
+    public void SaveCurveAndStartNew()
     {
-        GameObject curveObject = new GameObject();
-        BezierCurve newCurve = curveObject.AddComponent<BezierCurve>();
-        newCurve.CreateCurve(selectedPoints, m_step, m_drawer);
-        listCurves.Add(curveObject);
+        BezierCurve currentCurve = Instantiate(bezierCurvePrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BezierCurve>();
+        if (selectedCurve < listCurves.Count && listCurves.Count > 0)
+        {
+            listCurves[selectedCurve].enabled = false;
+        }
+        listCurves.Add(currentCurve);
         selectedCurve = listCurves.Count - 1;
-        selectedPoints.Clear();
     }
+
 
     public void RemoveSelectedCurve()
     {
         if (listCurves.Count > 0)
         {
-            GameObject curveToDestroy = listCurves[selectedCurve];
+            BezierCurve curveToDestroy = listCurves[selectedCurve];
             listCurves.RemoveAt(selectedCurve);
-            Destroy(curveToDestroy);
+            Destroy(curveToDestroy.gameObject);
             selectedCurve = Mathf.Clamp(selectedCurve, 0, listCurves.Count - 1);
         }
 
-    }
-
-    public void SelectPoint(Vector3 point)
-    {
-        selectedPoints.Add(point);
-    }
-
-    public void RemoveSelection(Vector3 point)
-    {
-        selectedPoints.Remove(point);
     }
 
     void Update()

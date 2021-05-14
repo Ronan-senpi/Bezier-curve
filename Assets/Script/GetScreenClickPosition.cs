@@ -15,7 +15,7 @@ public class GetScreenClickPosition : MonoBehaviour
             if (go != null)
             {
                 go = Instantiate(go, getWorldPos(), Quaternion.identity);
-                GameManager.Instance.SelectPoint(go.transform.position);
+             //   GameManager.Instance.SelectPoint(go.transform.position);
             }
         }
     }
