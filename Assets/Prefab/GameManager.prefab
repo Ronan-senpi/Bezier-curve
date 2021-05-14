@@ -49,3 +49,5 @@ MonoBehaviour:
   rayDistance: 100
   controlPointGo: {fileID: 6245995511135331177, guid: dc996353733211046ab6c41ec34b77bd, type: 3}
   selectedCurve: 0
+  selectMaterial: {fileID: 2100000, guid: 5f4dfe3c4f7a94f44ad8aaa7ee151416, type: 2}
+  unselectMaterial: {fileID: 2100000, guid: ad097944ca612f4439c97fdf7fa8f6e0, type: 2}

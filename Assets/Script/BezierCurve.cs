@@ -52,7 +52,9 @@ public class BezierCurve : MonoBehaviour
         controlLr.positionCount = controlPoints.Count;
         for (int i = 0; i < controlPoints.Count; i++)
         {
-            controlLr.SetPosition(i, controlPoints[i]);
+            Vector3 v = controlPoints[i];
+            v.z = .1f;
+            controlLr.SetPosition(i, v);
         }
     }
 
