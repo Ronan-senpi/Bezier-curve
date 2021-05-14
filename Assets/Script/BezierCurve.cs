@@ -37,6 +37,7 @@ public class BezierCurve : MonoBehaviour
         for (int i = 0; i < controlPoints.Count; i++)
         {
             GameObject go = Instantiate(GameManager.Instance.ControlPointGo, controlPoints[i], Quaternion.identity, transform);
+            go.name = i.ToString();
             ControlPointController cpc = go.GetComponent<ControlPointController>();
             cpc.Index = i;
         }
@@ -106,6 +107,31 @@ public class BezierCurve : MonoBehaviour
                 }
             }
         }
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit;
+            Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (!IsPointerOverUIObject())
+            {
+                if (Physics.Raycast(r, out hit, GameManager.Instance.RayDistance))
+                {
+                    if ((controlPointLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
+                    {
+                        Debug.Log(hit.collider.gameObject.layer);
+
+                        ControlPointController cpc;
+                        if (hit.collider.gameObject.TryGetComponent(out cpc))
+                        {
+                            int i = cpc.Index;
+                            cpc.Destroy();
+                            controlPoints.RemoveAt(i);
+                            DrawCurve();
+                        }
+                    }
+                }
+            }
+        }
+
         DragControlPoint();
     }
 

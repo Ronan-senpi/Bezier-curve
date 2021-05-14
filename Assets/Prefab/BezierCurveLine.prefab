@@ -45,15 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e4698f5829888a4db1b19a1a7a3dfe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ControlPointGo: {fileID: 6245995511135331177, guid: dc996353733211046ab6c41ec34b77bd, type: 3}
-  controlPoints: []
-  step: 0.012
-  drawer: 0
-  rayDistance: 100
   controlPointLayer:
     serializedVersion: 2
     m_Bits: 1024
-  m_controlPoints: []
+  controlPoints: []
 --- !u!120 &3223286391039353913
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -174,13 +169,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3223286392562876457}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.008726558, w: 0.999962}
   m_LocalPosition: {x: -2.8403006, y: -4.638502, z: -0.045309067}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3223286391039353914}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1}
 --- !u!120 &3223286392562876456
 LineRenderer:
   m_ObjectHideFlags: 0
