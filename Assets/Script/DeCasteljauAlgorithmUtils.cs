@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DeCasteljauAlgorithm : MonoBehaviour
+public static class DeCasteljauAlgorithmUtils
 {
-    public List<Vector3> BezierCurve(List<Vector3> controlPoints, float step)
+    public static List<Vector3> CalculateCurvePoints(List<Vector3> controlPoints, float step)
     {
         List<Vector3> curvePoints = new List<Vector3>();
         List<Vector3> barycentrePoints = new List<Vector3>();
