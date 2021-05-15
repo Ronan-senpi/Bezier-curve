@@ -7,6 +7,7 @@ public class BezierCurve : MonoBehaviour
 {
     private LineRenderer curveLr;
     private LineRenderer controlLr;
+    private LineRenderer convLr;
     [SerializeField] private List<Vector3> controlPoints;
     [SerializeField] private LayerMask controlPointLayer;
     private ControlPointController dragControlPointIndex;
@@ -22,8 +23,13 @@ public class BezierCurve : MonoBehaviour
         }
         if (!transform.GetChild(0).TryGetComponent(out controlLr))
         {
-            throw new System.Exception("Wsh met un LineRenderer sur un empty OriginPointLine stp");
+            throw new System.Exception("Wsh met un LineRenderer sur l'enfant stp");
         }
+        if (!controlLr.transform.GetChild(0).TryGetComponent(out convLr))
+        {
+            throw new System.Exception("Wsh met un LineRenderer sur l'enfant de l'enfant stp");
+        }
+
         if (GameManager.Instance.ControlPointGo == null)
         {
             throw new System.Exception("Wsh donne moi un prefab pour le control point !");
@@ -58,6 +64,14 @@ public class BezierCurve : MonoBehaviour
             v.z = .1f;
             controlLr.SetPosition(i, v);
         }
+    }
+
+    private void ShowConvexHullCurve()
+    {
+        List<Vector3> conv = GiftWrappingAlgorithm.CalculateConvexHull(ControlPoints);
+        convLr.positionCount = conv.Count;
+        for (int i = 0; i < conv.Count; i++)
+            convLr.SetPosition(i, conv[i]);
     }
 
     private void RemoveCurvePoint()
@@ -144,6 +158,7 @@ public class BezierCurve : MonoBehaviour
                 ShowControlPoint();
             ShowCurve();
             ShowControlCurve();
+            ShowConvexHullCurve();
         }
     }
 
