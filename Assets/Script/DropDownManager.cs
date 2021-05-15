@@ -38,6 +38,7 @@ public class DropDownManager : MonoBehaviour
                 Debug.Log(currentCurve.ControlPoints[i]);
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateX(currentCurve.ControlPoints[i], 10);
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -45,9 +46,9 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateXInvert(currentCurve.ControlPoints[i], 10);
             }
+            currentCurve.DrawCurve();
         }
 
-        currentCurve.DrawCurve();
     }
     private void OnRotateY()
     {
@@ -57,6 +58,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateY(currentCurve.ControlPoints[i], 10);
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -64,8 +66,8 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateYInvert(currentCurve.ControlPoints[i], 10);
             }
+            currentCurve.DrawCurve();
         }
-        currentCurve.DrawCurve();
 
     }
     private void OnRotateZ()
@@ -76,6 +78,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateZ(currentCurve.ControlPoints[i], 10);
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -83,8 +86,8 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateZInvert(currentCurve.ControlPoints[i], 10);
             }
+            currentCurve.DrawCurve();
         }
-        currentCurve.DrawCurve();
 
     }
     private void OnScale()
@@ -95,6 +98,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.Scale(currentCurve.ControlPoints[i], 0.2f);
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -103,6 +107,7 @@ public class DropDownManager : MonoBehaviour
 
                 currentCurve.ControlPoints[i] = TransformBezierUtils.ScaleInvert(currentCurve.ControlPoints[i], 0.2f);
             }
+            currentCurve.DrawCurve();
         }
     }
     private void OnTranslate()
@@ -113,6 +118,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,1,0));
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
@@ -120,6 +126,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,-1,0));
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -128,6 +135,7 @@ public class DropDownManager : MonoBehaviour
                 currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(-1,0,0));
 
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -135,6 +143,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(1,0,0));
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
@@ -142,6 +151,7 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,0,1));
             }
+            currentCurve.DrawCurve();
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
@@ -149,8 +159,8 @@ public class DropDownManager : MonoBehaviour
             {
                 currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,0,-1));
             }
+            currentCurve.DrawCurve();
         }
-        currentCurve.DrawCurve();
 
     }
     private void OnShear()

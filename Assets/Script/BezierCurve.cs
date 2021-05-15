@@ -92,8 +92,6 @@ public class BezierCurve : MonoBehaviour
                 {
                     if ((controlPointLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
                     {
-                        Debug.Log(hit.collider.gameObject.layer);
-
                         ControlPointController cpc;
                         if (hit.collider.gameObject.TryGetComponent(out cpc))
                         {
@@ -118,8 +116,6 @@ public class BezierCurve : MonoBehaviour
                 {
                     if ((controlPointLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
                     {
-                        Debug.Log(hit.collider.gameObject.layer);
-
                         ControlPointController cpc;
                         if (hit.collider.gameObject.TryGetComponent(out cpc))
                         {
