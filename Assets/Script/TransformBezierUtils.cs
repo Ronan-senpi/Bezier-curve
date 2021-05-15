@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransformBezierUtils : MonoBehaviour
+public static class TransformBezierUtils
 {
-    public Vector3 RotateX(Vector3 point, float angle)
+    public static Vector3 RotateX(Vector3 point, float angle)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -20,7 +20,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 RotateY(Vector3 point, float angle)
+    public static Vector3 RotateY(Vector3 point, float angle)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -36,7 +36,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 RotateZ(Vector3 point, float angle)
+    public static Vector3 RotateZ(Vector3 point, float angle)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -52,7 +52,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 Translate(Vector3 point, Vector3 dist)
+    public static Vector3 Translate(Vector3 point, Vector3 dist)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -66,7 +66,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 Scale(Vector3 point, float scale)
+    public static Vector3 Scale(Vector3 point, float scale)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -80,7 +80,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 RotateXInvert(Vector3 point, float angle)
+    public static Vector3 RotateXInvert(Vector3 point, float angle)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -96,7 +96,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 RotateYInvert(Vector3 point, float angle)
+    public static Vector3 RotateYInvert(Vector3 point, float angle)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -112,7 +112,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 RotateZInvert(Vector3 point, float angle)
+    public static Vector3 RotateZInvert(Vector3 point, float angle)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -128,7 +128,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 TranslateInvert(Vector3 point, Vector3 dist)
+    public static Vector3 TranslateInvert(Vector3 point, Vector3 dist)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -142,7 +142,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 ScaleInvert(Vector3 point, float scale)
+    public static Vector3 ScaleInvert(Vector3 point, float scale)
     {
         Matrix4x4 mat = new Matrix4x4();
 
@@ -156,7 +156,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 Shear(Vector3 point, int matrixCase, float percent)
+    public static Vector3 Shear(Vector3 point, int matrixCase, float percent)
     {
         Matrix4x4 mat = new Matrix4x4();
         mat[0, 0] = mat[1, 1] = mat[2, 2] = mat[3, 3] = 1;
@@ -172,7 +172,7 @@ public class TransformBezierUtils : MonoBehaviour
         return point;
     }
 
-    public Vector3 ShearInvert(Vector3 point, int matrixCase, float percent)
+    public static Vector3 ShearInvert(Vector3 point, int matrixCase, float percent)
     {
         Matrix4x4 mat = new Matrix4x4();
         mat[0, 0] = mat[1, 1] = mat[2, 2] = mat[3, 3] = 1;
