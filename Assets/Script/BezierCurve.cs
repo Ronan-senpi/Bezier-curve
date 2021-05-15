@@ -8,7 +8,6 @@ public class BezierCurve : MonoBehaviour
     private LineRenderer curveLr;
     private LineRenderer controlLr;
     [SerializeField] private List<Vector3> controlPoints;
-    public List<Vector3> ControlPoints { get { return controlPoints; } }
     [SerializeField] private LayerMask controlPointLayer;
     private ControlPointController dragControlPointIndex;
     private List<Vector3> curvePoints;
