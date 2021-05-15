@@ -12,8 +12,6 @@ public class BezierCurve : MonoBehaviour
     private ControlPointController dragControlPointIndex;
     private List<Vector3> curvePoints;
 
-    public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
-
     private void Awake()
     {
         if (!TryGetComponent(out curveLr))
@@ -137,7 +135,7 @@ public class BezierCurve : MonoBehaviour
     }
 
 
-    public void DrawCurve(bool RemoveControl = true)
+    void DrawCurve(bool RemoveControl = true)
     {
         if (controlPoints != null && controlPoints.Count > 0)
         {
@@ -182,6 +180,7 @@ public class BezierCurve : MonoBehaviour
     {
         if (transform.childCount > 1)
         {
+            Debug.Log("On est la");
             for (int i = 1; i < transform.childCount; i++)
             {
                 Renderer renderer = transform.GetChild(i).GetComponent<Renderer>();
