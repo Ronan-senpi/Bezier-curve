@@ -2,7 +2,7 @@
 Bézier curve
 
 
-![drag image](.gitressources\GIF\bezier.gif)
+![drag image](https://raw.githubusercontent.com/Ronan-senpi/Bezier-curve/main/.gitressources/GIF/bezier.gif)
 
 :o: done :pushpin: in progress :x: cancel
 
