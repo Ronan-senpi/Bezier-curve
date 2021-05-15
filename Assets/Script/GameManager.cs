@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Parameters")]
     [SerializeField] private GameObject bezierCurvePrefab;
+    [SerializeField] private GameObject convexHullPrefab;
     [Range(0.001f, 1.0f)]
     [SerializeField] private float m_step;
     public float Step { get => m_step; set => m_step = value; }
@@ -101,5 +102,18 @@ public class GameManager : MonoBehaviour
         {
             RemoveSelectedCurve();
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            DrawConvexHull();
+        }
+    }
+
+    private void DrawConvexHull()
+    {
+        LineRenderer convLr = Instantiate(convexHullPrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<LineRenderer>();
+        List<Vector3> conv = GiftWrappingAlgorithm.CalculateConvexHull(listCurves[selectedCurve].ControlPoints);
+        convLr.positionCount = conv.Count;
+        for (int i = 0; i < conv.Count; i++)
+            convLr.SetPosition(i, conv[i]);
     }
 }

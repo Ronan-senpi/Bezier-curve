@@ -45,9 +45,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   listCurves: []
   bezierCurvePrefab: {fileID: 3223286391039353916, guid: d8cb5218598a10041a8f3ad5bdcfac77, type: 3}
+  convexHullPrefab: {fileID: 3986373754161830127, guid: 4ac989783a1e7084b9fa6baa216b871b, type: 3}
   m_step: 0.001
   rayDistance: 100
   controlPointGo: {fileID: 6245995511135331177, guid: dc996353733211046ab6c41ec34b77bd, type: 3}
   selectedCurve: 0
   selectMaterial: {fileID: 2100000, guid: 5f4dfe3c4f7a94f44ad8aaa7ee151416, type: 2}
   unselectMaterial: {fileID: 2100000, guid: ad097944ca612f4439c97fdf7fa8f6e0, type: 2}
+  sliderStep: {fileID: 0}
