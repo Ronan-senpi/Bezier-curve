@@ -93,18 +93,17 @@ public class DropDownManager : MonoBehaviour
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.Scale(currentCurve.ControlPoints[i], 1.2f);
+                currentCurve.ControlPoints[i] = TransformBezierUtils.Scale(currentCurve.ControlPoints[i], 0.2f);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.ScaleInvert(currentCurve.ControlPoints[i], 1.2f);
+
+                currentCurve.ControlPoints[i] = TransformBezierUtils.ScaleInvert(currentCurve.ControlPoints[i], 0.2f);
             }
         }
-        currentCurve.DrawCurve();
-
     }
     private void OnTranslate()
     {
@@ -127,6 +126,7 @@ public class DropDownManager : MonoBehaviour
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
                 currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(-1,0,0));
+
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
