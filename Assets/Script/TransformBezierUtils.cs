@@ -57,9 +57,9 @@ public static class TransformBezierUtils
         Matrix4x4 mat = new Matrix4x4();
 
         mat[0, 0] = mat[1, 1] = mat[2, 2] = mat[3, 3] = 1;
-        mat[2, 0] = dist.x;
-        mat[2, 1] = dist.y;
-        mat[2, 2] = dist.z;
+        mat[0, 3] = dist.x;
+        mat[1, 3] = dist.y;
+        mat[2, 3] = dist.z;
 
         point = mat.MultiplyPoint(point);
 
@@ -133,9 +133,9 @@ public static class TransformBezierUtils
         Matrix4x4 mat = new Matrix4x4();
 
         mat[0, 0] = mat[1, 1] = mat[2, 2] = mat[3, 3] = 1;
-        mat[2, 0] = dist.x;
-        mat[2, 1] = dist.y;
-        mat[2, 2] = dist.z;
+        mat[0, 3] = dist.x;
+        mat[1, 3] = dist.y;
+        mat[2, 3] = dist.z;
 
         point = mat.inverse.MultiplyPoint(point);
 

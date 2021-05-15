@@ -65,6 +65,8 @@ public class DropDownManager : MonoBehaviour
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateYInvert(currentCurve.ControlPoints[i], 10);
             }
         }
+        currentCurve.DrawCurve();
+
     }
     private void OnRotateZ()
     {
@@ -82,6 +84,8 @@ public class DropDownManager : MonoBehaviour
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateZInvert(currentCurve.ControlPoints[i], 10);
             }
         }
+        currentCurve.DrawCurve();
+
     }
     private void OnScale()
     {
@@ -89,16 +93,18 @@ public class DropDownManager : MonoBehaviour
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.Scale(currentCurve.ControlPoints[i], 0.2f);
+                currentCurve.ControlPoints[i] = TransformBezierUtils.Scale(currentCurve.ControlPoints[i], 1.2f);
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.ScaleInvert(currentCurve.ControlPoints[i], 0.2f);
+                currentCurve.ControlPoints[i] = TransformBezierUtils.ScaleInvert(currentCurve.ControlPoints[i], 1.2f);
             }
         }
+        currentCurve.DrawCurve();
+
     }
     private void OnTranslate()
     {
@@ -106,44 +112,46 @@ public class DropDownManager : MonoBehaviour
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], Vector3.up);
+                currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,1,0));
             }
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], Vector3.down);
+                currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,-1,0));
             }
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], Vector3.left);
+                currentCurve.ControlPoints[i] = TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(-1,0,0));
             }
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], Vector3.right);
+                currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(1,0,0));
             }
         }
         if (Input.GetKeyDown(KeyCode.Z))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], Vector3.forward);
+                currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,0,1));
             }
         }
         if (Input.GetKeyDown(KeyCode.S))
         {
             for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
             {
-                currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], Vector3.back);
+                currentCurve.ControlPoints[i]= TransformBezierUtils.Translate(currentCurve.ControlPoints[i], new Vector3(0,0,-1));
             }
         }
+        currentCurve.DrawCurve();
+
     }
     private void OnShear()
     {
