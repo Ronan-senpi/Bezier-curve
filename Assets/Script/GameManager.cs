@@ -63,7 +63,6 @@ public class GameManager : MonoBehaviour
         //    if (m_step <= 0.9f)
         //    {
         //        m_step += 0.1f;
-        //        Debug.Log("Increase");
         //    }
         //}
         //if (Input.GetKeyDown(KeyCode.KeypadMinus))
@@ -71,13 +70,12 @@ public class GameManager : MonoBehaviour
         //    if (m_step >= 0.2f)
         //    {
         //        m_step -= 0.1f;
-        //        Debug.Log("Decrease");
         //    }
         //}
 
         m_step = sliderStep.value;
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.KeypadPlus))
         {
             listCurves[selectedCurve].OnSelectionChange(unselectMaterial);
             listCurves[selectedCurve].enabled = false;
@@ -88,7 +86,7 @@ public class GameManager : MonoBehaviour
             listCurves[selectedCurve].OnSelectionChange(selectMaterial);
             listCurves[selectedCurve].enabled = true;
         }
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
             listCurves[selectedCurve].OnSelectionChange(unselectMaterial);
             listCurves[selectedCurve].enabled = false;

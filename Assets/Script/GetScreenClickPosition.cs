@@ -22,10 +22,8 @@ public class GetScreenClickPosition : MonoBehaviour
     public Vector3 getWorldPos()
     {
         Vector3 mousePos = Input.mousePosition;
-        Debug.Log(mousePos);
         mousePos.z = 10;
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePos);
-        Debug.Log(worldPosition);
         return worldPosition;
     }
 }

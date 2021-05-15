@@ -24,7 +24,6 @@ public class ChangeStep : MonoBehaviour
             if (step <= 0.9f)
             {
                 step += 0.1f;
-                Debug.Log("Increase");
             }
         }
         if (Input.GetKeyDown(KeyCode.KeypadMinus))
@@ -32,7 +31,6 @@ public class ChangeStep : MonoBehaviour
             if (step >= 0.2f)
             {
                 step -= 0.1f;
-                Debug.Log("Decrease");
             }
         }
     }

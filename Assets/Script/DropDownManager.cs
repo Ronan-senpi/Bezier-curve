@@ -35,7 +35,6 @@ public class DropDownManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             for(int i = 0; i < currentCurve.ControlPoints.Count; i++){
-                Debug.Log(currentCurve.ControlPoints[i]);
                 currentCurve.ControlPoints[i] = TransformBezierUtils.RotateX(currentCurve.ControlPoints[i], 10);
             }
             currentCurve.DrawCurve();
