@@ -27,6 +27,7 @@ public class DropDownManager : MonoBehaviour
             if (dropDown.captionText.text == "RotateZ") OnRotateZ();
             if (dropDown.captionText.text == "Scale") OnScale();
             if (dropDown.captionText.text == "Translate") OnTranslate();
+            if (dropDown.captionText.text == "Shear") OnShear();
         }
     }
 
@@ -164,6 +165,20 @@ public class DropDownManager : MonoBehaviour
     }
     private void OnShear()
     {
-
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
+            {
+                currentCurve.ControlPoints[i] = TransformBezierUtils.Shear(currentCurve.ControlPoints[i], 2, 0.2f);
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            for (int i = 0; i < currentCurve.ControlPoints.Count; i++)
+            {
+                currentCurve.ControlPoints[i] = TransformBezierUtils.ShearInvert(currentCurve.ControlPoints[i], 2, 0.2f);
+            }
+        }
+        currentCurve.DrawCurve();
     }
 }
