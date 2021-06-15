@@ -120,6 +120,29 @@ public class BezierCurve : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            RaycastHit hit;
+            Ray r = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (!IsPointerOverUIObject())
+            {
+                if (Physics.Raycast(r, out hit, GameManager.Instance.RayDistance))
+                {
+                    if ((controlPointLayer.value & (1 << hit.collider.gameObject.layer)) > 0)
+                    {
+                        ControlPointController cpc;
+                        if (hit.collider.gameObject.TryGetComponent(out cpc))
+                        {
+                            controlPoints.Insert(cpc.Index, cpc.transform.position);
+                            DrawCurve();
+                        }
+                    }
+                }
+            }
+        }
+
+
         if (Input.GetMouseButtonDown(1))
         {
             RaycastHit hit;
