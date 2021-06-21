@@ -14,6 +14,7 @@ public class BezierCurve : MonoBehaviour
     private List<Vector3> curvePoints;
 
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
+    public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
 
     private void Awake()
     {
