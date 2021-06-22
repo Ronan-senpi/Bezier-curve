@@ -4,50 +4,51 @@ using System.Linq;
 
 public class Extrusion : MonoBehaviour
 {
+    private static Extrusion instance;
+    public static Extrusion Instance
+    {
+        get
+        {
+            if (instance == null) instance = FindObjectOfType<Extrusion>();
+            return instance;
+        }
+    }
+
     [SerializeField]
-    Mesh mesh;
-    
-    private BezierCurve curve;
-    private List<Vector3> vertex;
+    private MeshFilter meshFilter;
+    [SerializeField]
+    private float radius;
+    [SerializeField]
+    private GameObject point;
+    [SerializeField]
+    private GameObject container;
+    int profileNbPoint = 3;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Set2DProfileNbPoint(int value)
     {
-        vertex = GetVertices(mesh);
+        profileNbPoint = value < 3 ? 3 : value;
     }
 
-    // Update is called once per frame
-    void Update()
+    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool showPoint = false)
     {
-        foreach(Vector3 points in curve.ControlPoints)
+        GameObject cont = null;
+        Debug.Log(profileNbPoint);
+        List<Vector3> vs = new List<Vector3>();
+        if (showPoint)
+            cont = Instantiate(this.container, location, Quaternion.identity, gameObject.transform);
+
+        for (int i = 0; i < profileNbPoint; i++)
         {
-            Mesh m = Instantiate(mesh, points, Quaternion.identity);
+            float angle = i * Mathf.PI * 2f / profileNbPoint;
+            Vector3 newPos = (location + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius);
+            if (showPoint)
+                Instantiate(point, newPos, Quaternion.identity, cont.transform);
+
+            vs.Add(newPos);
         }
+        if (showPoint)
+            cont.transform.LookAt(nextLocation);
+        return vs;
     }
 
-    private List<Vector3> GetVertices(Mesh mesh)
-    {
-        Vector3[] vert = mesh.vertices;
-
-        List<Vector3> VertexList = new List<Vector3>();
-        foreach (Vector3 vertice in vert)
-        {
-            VertexList.Add(vertice);
-        }
-
-        VertexList = VertexList.Distinct().ToList();
-
-        return VertexList;
-    }
-
-    private Vector3 GetTangent(BezierCurve curve, int n)
-    {
-        Vector3 tangent;
-
-        if (n == 0) tangent = curve.ControlPoints[1] - curve.ControlPoints[0];
-        else if (n == curve.ControlPoints.Count - 1) tangent = curve.ControlPoints[curve.ControlPoints.Count - 1] - curve.ControlPoints[curve.ControlPoints.Count - 2];
-        else tangent = curve.ControlPoints[n + 1] - curve.ControlPoints[n - 1];
-
-        return tangent.normalized;
-    }
 }

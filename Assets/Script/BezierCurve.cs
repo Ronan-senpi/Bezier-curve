@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,11 +9,13 @@ public class BezierCurve : MonoBehaviour
     private LineRenderer curveLr;
     private LineRenderer controlLr;
     private LineRenderer convLr;
-    [SerializeField] private List<Vector3> controlPoints;
-    [SerializeField] private LayerMask controlPointLayer;
+    [SerializeField]
+    private List<Vector3> controlPoints;
+    [SerializeField]
+    private LayerMask controlPointLayer;
     private ControlPointController dragControlPointIndex;
     private List<Vector3> curvePoints;
-
+    private List<Vector3> cloudsPoint { get; set; } = new List<Vector3>();
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
     public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
 
@@ -54,6 +57,13 @@ public class BezierCurve : MonoBehaviour
         for (int i = 0; i < curvePoints.Count; i++)
         {
             curveLr.SetPosition(i, curvePoints[i]);
+            if (i+1 < curvePoints.Count)
+            {
+                if (curvePoints[i] != curvePoints[i + 1])
+                {
+                    cloudsPoint.AddRange(Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], true));
+                }
+            }
         }
     }
     private void ShowControlCurve()
@@ -88,6 +98,16 @@ public class BezierCurve : MonoBehaviour
         }
         curveLr.positionCount = 0;
         controlLr.positionCount = 0;
+        cloudsPoint = new List<Vector3>();
+
+        ControlPointController cp;
+        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        {
+            if (GameManager.Instance.transform.GetChild(i).TryGetComponent(out cp))
+            {
+                cp.Destroy();
+            }
+        }
     }
 
     private void Update()
@@ -177,12 +197,15 @@ public class BezierCurve : MonoBehaviour
         {
             if (RemoveControl)
                 RemoveCurvePoint();
-            curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(new List<Vector3>(controlPoints), GameManager.Instance.Step);
+            curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(new List<Vector3>(controlPoints), GameManager.Instance.Step).Distinct().ToList();
             if (RemoveControl)
                 ShowControlPoint();
-            ShowCurve();
-            ShowControlCurve();
-            ShowConvexHullCurve();
+            if (controlPoints.Count > 1)
+            {
+                ShowCurve();
+                ShowControlCurve();
+                ShowConvexHullCurve();
+            }
         }
     }
 
