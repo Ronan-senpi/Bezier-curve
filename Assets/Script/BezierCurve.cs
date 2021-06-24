@@ -57,7 +57,7 @@ public class BezierCurve : MonoBehaviour
         for (int i = 0; i < curvePoints.Count; i++)
         {
             curveLr.SetPosition(i, curvePoints[i]);
-            if (i+1 < curvePoints.Count)
+            if (i + 1 < curvePoints.Count)
             {
                 if (curvePoints[i] != curvePoints[i + 1])
                 {
@@ -65,6 +65,7 @@ public class BezierCurve : MonoBehaviour
                 }
             }
         }
+        clearGM();
     }
     private void ShowControlCurve()
     {
@@ -246,6 +247,31 @@ public class BezierCurve : MonoBehaviour
                 renderer.sharedMaterial = mat;
             }
         }
+    }
+    private void clearGM()
+    {
+        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        {
+            Transform child = GameManager.Instance.transform.GetChild(i);
+            for (int j = 0; j < child.childCount; j++)
+            {
+                Transform grandChild = child.GetChild(j);
+                grandChild.parent = GameManager.Instance.transform;
+            }
 
+        }
+        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        {
+            Transform child = GameManager.Instance.transform.GetChild(i);
+            for (int j = 0; j < child.childCount; j++)
+            {
+                Transform grandChild = child.GetChild(j);
+                grandChild.parent = GameManager.Instance.transform;
+            }
+            if (child.name == "Container(Clone)")
+            {
+                child.GetComponent<ControlPointController>().Destroy();
+            }
+        }
     }
 }
