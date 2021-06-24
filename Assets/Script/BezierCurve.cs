@@ -14,8 +14,9 @@ public class BezierCurve : MonoBehaviour
     [SerializeField]
     private LayerMask controlPointLayer;
     private ControlPointController dragControlPointIndex;
-    private List<Vector3> curvePoints;
-    private List<Vector3> cloudsPoint { get; set; } = new List<Vector3>();
+    public List<Vector3> curvePoints;
+    public List<Vector3> cloudsPoint;
+    public List<Vector3> CloudsPoint { get { return cloudsPoint; }}
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
     public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
 
@@ -63,6 +64,10 @@ public class BezierCurve : MonoBehaviour
                 {
                     cloudsPoint.AddRange(Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], true));
                 }
+            }
+            else
+            {
+
             }
         }
     }
