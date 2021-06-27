@@ -64,7 +64,7 @@ public class BezierCurve : MonoBehaviour
             {
                 if (curvePoints[i] != curvePoints[i + 1])
                 {
-                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], OpenCurve);
+                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], true);
                 }
             }
             else
@@ -281,6 +281,12 @@ public class BezierCurve : MonoBehaviour
             for (int j = 0; j < child2.childCount; j++)
             {
                 Transform grandChild = child2.GetChild(j);
+                grandChild.parent = GameManager.Instance.transform;
+            }
+            Transform child3 = GameManager.Instance.transform.GetChild(i);
+            for (int j = 0; j < child3.childCount; j++)
+            {
+                Transform grandChild = child3.GetChild(j);
                 grandChild.parent = GameManager.Instance.transform;
             }
         }

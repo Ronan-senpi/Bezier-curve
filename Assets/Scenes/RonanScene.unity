@@ -454,6 +454,7 @@ MonoBehaviour:
   meshFilter: {fileID: 689368658}
   radius: 0.5
   point: {fileID: 8913197975234929545, guid: dcf5aeae5e129e6439b1f98a39ae7447, type: 3}
+  cube: {fileID: 9104756616469683173, guid: 424d7509506468444ac0651e4a86eaf2, type: 3}
   container: {fileID: 2895425124185426688, guid: 8792e60ed43d7e14a8a9fc7991c8979b, type: 3}
 --- !u!1 &792430587
 GameObject:
