@@ -21,6 +21,8 @@ public class Extrusion : MonoBehaviour
     [SerializeField]
     private GameObject point;
     [SerializeField]
+    private GameObject cube;
+    [SerializeField]
     private GameObject container;
     int profileNbPoint = 3;
 
@@ -47,8 +49,7 @@ public class Extrusion : MonoBehaviour
         }
         if (firstPoint.HasValue)
         {
-            Instantiate(point, firstPoint.Value, Quaternion.identity, cont.transform);
-            Instantiate(point, firstPoint.Value, Quaternion.identity, cont.transform);
+            Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
         cont.transform.LookAt(nextLocation);
