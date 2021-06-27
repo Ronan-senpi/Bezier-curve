@@ -27,7 +27,7 @@ public class Extrusion : MonoBehaviour
     int profileNbPoint = 3;
 
 
-    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile)
+    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation)
     {
         GameObject cont = null;
         Debug.Log(profileNbPoint);
@@ -52,7 +52,7 @@ public class Extrusion : MonoBehaviour
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
-        cont.transform.LookAt(nextLocation);
+        cont.transform.rotation = Quaternion.LookRotation(rotation);
 
         return vs;
     }
