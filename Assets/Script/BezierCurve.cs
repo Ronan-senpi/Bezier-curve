@@ -15,8 +15,6 @@ public class BezierCurve : MonoBehaviour
     [SerializeField]
     private LayerMask controlPointLayer;
     private ControlPointController dragControlPointIndex;
-    private List<Vector3> cloudsPoint;
-    public List<Vector3> CloudsPoint { get { return cloudsPoint; }}
 
     private List<Vector3> curvePoints;
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
