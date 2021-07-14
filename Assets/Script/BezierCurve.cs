@@ -73,13 +73,10 @@ public class BezierCurve : MonoBehaviour
                     Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i]);
                 }
             }
-            else
-            {
-
-            }
         }
         clearGM();
         GetCloudPoint();
+        Extrusion.Instance.CreateFace();
     }
 
     private void GetCloudPoint()
@@ -218,6 +215,7 @@ public class BezierCurve : MonoBehaviour
 
     public void DrawCurve(bool RemoveControl = true)
     {
+        Debug.Log("when is this called");
         if (controlPoints != null && controlPoints.Count > 0)
         {
             if (RemoveControl)
