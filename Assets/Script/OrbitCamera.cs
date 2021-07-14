@@ -16,7 +16,7 @@ public class OrbitCamera : MonoBehaviour
 
     void LateUpdate()
     {
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(1))
         {
             Quaternion camTurnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotationSpeed, Vector3.up);
             offsetCam = camTurnAngle * offsetCam;

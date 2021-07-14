@@ -94,7 +94,6 @@ public class BezierCurve : MonoBehaviour
         for (int i = 0; i < controlPoints.Count; i++)
         {
             Vector3 v = controlPoints[i];
-            v.z = .1f;
             controlLr.SetPosition(i, v);
         }
     }
