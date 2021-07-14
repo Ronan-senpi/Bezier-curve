@@ -27,13 +27,13 @@ public class Extrusion : MonoBehaviour
     int profileNbPoint = 3;
 
 
-    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation)
+    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation, Transform container)
     {
         GameObject cont = null;
         Debug.Log(profileNbPoint);
         List<Vector3> vs = new List<Vector3>();
 
-        cont = Instantiate(this.container, location, Quaternion.identity, gameObject.transform);
+        cont = Instantiate(this.container, location, Quaternion.identity, container);
         Vector3? firstPoint = null;
         for (int i = 0; i < profileNbPoint; i++)
         {
