@@ -79,18 +79,27 @@ public class BezierCurve : MonoBehaviour
                 }
             }
         }
-        clearGM();
+        //clearGM();
         GetCloudPoint();
         Extrusion.Instance.CreateFace();
     }
 
     private void GetCloudPoint()
     {
-        for (int i = 0; i <cloudPointContainer.childCount; i++)
+        for (int i = 0; i < cloudPointContainer.childCount; i++)
         {
-            Transform child =cloudPointContainer.GetChild(i);
-            CloudsPoints.Add(child.position);
+            Transform child = cloudPointContainer.GetChild(i);
+            for (int j = 0; j < child.childCount; j++)
+            {
+                Transform grandChild = child.GetChild(j);
+                CloudsPoints.Add(transform.TransformPoint(grandChild.position));
+            }
         }
+        //    for (int i = 0; i <cloudPointContainer.childCount; i++)
+        //{
+        //    Transform child = cloudPointContainer.GetChild(i);
+        //    CloudsPoints.Add(child.position);
+        //}
     }
 
     private void ShowControlCurve()
@@ -274,37 +283,37 @@ public class BezierCurve : MonoBehaviour
             }
         }
     }
-    private void clearGM()
-    {
-        for (int i = 0; i <cloudPointContainer.childCount; i++)
-        {
-            Transform child =cloudPointContainer.GetChild(i);
-            for (int j = 0; j < child.childCount; j++)
-            {
-                Transform grandChild = child.GetChild(j);
-                grandChild.parent =cloudPointContainer;
-            }
+    //private void clearGM()
+    //{
+    //    for (int i = 0; i <cloudPointContainer.childCount; i++)
+    //    {
+    //        Transform child =cloudPointContainer.GetChild(i);
+    //        for (int j = 0; j < child.childCount; j++)
+    //        {
+    //            Transform grandChild = child.GetChild(j);
+    //            grandChild.parent =cloudPointContainer;
+    //        }
 
-            Transform child2 =cloudPointContainer.GetChild(i);
-            for (int j = 0; j < child2.childCount; j++)
-            {
-                Transform grandChild = child2.GetChild(j);
-                grandChild.parent =cloudPointContainer;
-            }
-            Transform child3 =cloudPointContainer.GetChild(i);
-            for (int j = 0; j < child3.childCount; j++)
-            {
-                Transform grandChild = child3.GetChild(j);
-                grandChild.parent =cloudPointContainer;
-            }
-        }
-        for (int i = 0; i <cloudPointContainer.childCount; i++)
-        {
-            Transform child =cloudPointContainer.GetChild(i);
-            if (child.name == "Container(Clone)")
-            {
-                child.GetComponent<ControlPointController>().Destroy();
-            }
-        }
-    }
+    //        Transform child2 =cloudPointContainer.GetChild(i);
+    //        for (int j = 0; j < child2.childCount; j++)
+    //        {
+    //            Transform grandChild = child2.GetChild(j);
+    //            grandChild.parent =cloudPointContainer;
+    //        }
+    //        Transform child3 =cloudPointContainer.GetChild(i);
+    //        for (int j = 0; j < child3.childCount; j++)
+    //        {
+    //            Transform grandChild = child3.GetChild(j);
+    //            grandChild.parent =cloudPointContainer;
+    //        }
+    //    }
+    //    for (int i = 0; i <cloudPointContainer.childCount; i++)
+    //    {
+    //        Transform child =cloudPointContainer.GetChild(i);
+    //        if (child.name == "Container(Clone)")
+    //        {
+    //            child.GetComponent<ControlPointController>().Destroy();
+    //        }
+    //    }
+    //}
 }
