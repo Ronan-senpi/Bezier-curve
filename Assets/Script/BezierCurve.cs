@@ -20,7 +20,7 @@ public class BezierCurve : MonoBehaviour
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
     public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
     public List<Vector3> CloudsPoints { get; private set; } = new List<Vector3>();
-    public bool OpenCurve = true;
+    private bool CloseCurve = false;
 
     private void Awake()
     {
@@ -64,7 +64,7 @@ public class BezierCurve : MonoBehaviour
             {
                 if (curvePoints[i] != curvePoints[i + 1])
                 {
-                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], true);
+                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve);
                 }
             }
             else

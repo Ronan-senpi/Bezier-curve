@@ -47,7 +47,7 @@ public class Extrusion : MonoBehaviour
 
             vs.Add(newPos);
         }
-        if (firstPoint.HasValue)
+        if (firstPoint.HasValue && closeProfile)
         {
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
@@ -59,8 +59,11 @@ public class Extrusion : MonoBehaviour
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.E))
+        {
             CreateFace();
+        }
     }
     public void CreateFace()
     {
@@ -71,34 +74,32 @@ public class Extrusion : MonoBehaviour
 
         List<int> indices = new List<int>();
 
-        for (int i = 0; i < curveToDraw.CurvePoints.Count - 1; i++)
+        for (int i = 0; i < profileNbPoint - 1; i++)
         {
-            for (int j = 0; j < profileNbPoint - 1; j++)
+            for (int j = 0; j < curveToDraw.CurvePoints.Count - 1; j++)
             {
-                //indices.Add((i + 1) * profileNbPoint + j + 1);
-                //indices.Add(i * profileNbPoint + j + 1);
+                //backface
                 //indices.Add(i * profileNbPoint + j);
+                //indices.Add(i * profileNbPoint + j + 1);
+                //indices.Add((i + 1) * profileNbPoint + j + 1);
+                //indices.Add((i + 1) * profileNbPoint + j);
 
+                //frontface
                 //indices.Add(i * profileNbPoint + j);
                 //indices.Add((i + 1) * profileNbPoint + j);
                 //indices.Add((i + 1) * profileNbPoint + j + 1);
+                //indices.Add(i * profileNbPoint + j + 1);
 
-                //frontface
-                indices.Add(i * profileNbPoint + j);
-                indices.Add(i * profileNbPoint + j + 1);
-                indices.Add((i + 1) * profileNbPoint + j + 1);
-                indices.Add((i + 1) * profileNbPoint + j);
-
-                //backface
-                indices.Add(i * profileNbPoint + j);
-                indices.Add((i + 1) * profileNbPoint + j);
-                indices.Add((i+1) * profileNbPoint + j + 1);
-                indices.Add(i * profileNbPoint + j + 1);
+                indices.Add(i + j * profileNbPoint);
+                indices.Add(i + (j + 1) * profileNbPoint);
+                indices.Add((i + 1) + (j + 1) * profileNbPoint);
+                indices.Add((i + 1) + j * profileNbPoint);
             }
+
         }
 
         mesh.SetVertices(curveToDraw.CloudsPoints.ToArray());
         mesh.SetIndices(indices.ToArray(), MeshTopology.Quads, 0);
-        //mesh.RecalculateNormals();
+        mesh.RecalculateNormals();
     }
 }
