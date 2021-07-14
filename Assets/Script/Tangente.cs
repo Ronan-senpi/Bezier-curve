@@ -14,9 +14,12 @@ public class Tangente : MonoBehaviour
         {
             Vector3 point = Vector3.zero;
             if (i == 0) point = curve.ControlPoints[0] - curve.ControlPoints[1];
-            else if(i == curve.CurvePoints.Count - 1) point = 
-                    curve.ControlPoints[curve.ControlPoints.Count - 1] - curve.ControlPoints[curve.ControlPoints.Count - 2];
-            else point = curve.CurvePoints[i + 1] - curve.CurvePoints[i - 1];
+            else if (i == curve.CurvePoints.Count - 1) point =
+                     curve.ControlPoints[curve.ControlPoints.Count - 1] - curve.ControlPoints[curve.ControlPoints.Count - 2];
+            else
+            {
+                point = curve.CurvePoints[i + 1] - curve.CurvePoints[i - 1];
+            }
             point = point.normalized;
             tan.Add(point);
         }

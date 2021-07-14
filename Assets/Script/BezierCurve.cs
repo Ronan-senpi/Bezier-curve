@@ -26,7 +26,7 @@ public class BezierCurve : MonoBehaviour
     
     [SerializeField]
     private Tangente tan;
-    private bool CloseCurve = false;
+    private bool CloseCurve = true;
 
 
     private void Awake()

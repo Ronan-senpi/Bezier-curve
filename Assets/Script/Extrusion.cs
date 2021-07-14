@@ -36,7 +36,7 @@ public class Extrusion : MonoBehaviour
         for (int i = 0; i < profileNbPoint; i++)
         {
             float angle = i * Mathf.PI * 2f / profileNbPoint;
-            Vector3 newPos = (location + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius);
+            Vector3 newPos = (location + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), Mathf.Atan(angle)) * radius);
             if (closeProfile && i == 0)
             {
                 firstPoint = newPos;
@@ -50,23 +50,8 @@ public class Extrusion : MonoBehaviour
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
-        
-        cont.transform.forward = rotation;
 
-        if (cont.transform.rotation.x < 0 && cont.transform.rotation.y < 0)
-        {
-            cont.transform.forward = new Vector3(-rotation.x, -rotation.y, rotation.z);
-        }
-        
-        if (cont.transform.rotation.x < 0)
-        {
-            cont.transform.forward = new Vector3(-rotation.x, rotation.y, rotation.z);
-        }
-        else if(cont.transform.rotation.y < 0)
-        {
-            cont.transform.forward = new Vector3(rotation.x, -rotation.y, rotation.z);
-        }
-
+        //TO DO : TA MERE
         Vector3[] normals = new Vector3[vs.Count];
         for (int i = 0; i < vs.Count - 1; i++)
         {
@@ -102,10 +87,10 @@ public class Extrusion : MonoBehaviour
             for (int j = 0; j < (curveToDraw.CloudsPoints.Count / profileNbPoint) - 1; j++)
             {
                 //backface
-                //indices.Add(i * profileNbPoint + j);
-                //indices.Add(i * profileNbPoint + j + 1);
-                //indices.Add((i + 1) * profileNbPoint + j + 1);
-                //indices.Add((i + 1) * profileNbPoint + j);
+                indices.Add(i * profileNbPoint + j);
+                indices.Add(i * profileNbPoint + j + 1);
+                indices.Add((i + 1) * profileNbPoint + j + 1);
+                indices.Add((i + 1) * profileNbPoint + j);
 
                 //frontface
                 indices.Add(i * profileNbPoint + j);
