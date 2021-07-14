@@ -10,6 +10,7 @@ public class BezierCurve : MonoBehaviour
     private LineRenderer curveLr;
     private LineRenderer controlLr;
     private LineRenderer convLr;
+    private Transform cloudPointContainer;
     [SerializeField]
     private List<Vector3> controlPoints;
     [SerializeField]
@@ -30,11 +31,12 @@ public class BezierCurve : MonoBehaviour
 
     private void Awake()
     {
+        cloudPointContainer = transform.GetChild(0);
         if (!TryGetComponent(out curveLr))
         {
             throw new System.Exception("Wsh met un LineRenderer avec le BezierCurve stp");
         }
-        if (!transform.GetChild(0).TryGetComponent(out controlLr))
+        if (!transform.GetChild(1).TryGetComponent(out controlLr))
         {
             throw new System.Exception("Wsh met un LineRenderer sur l'enfant stp");
         }
@@ -71,23 +73,22 @@ public class BezierCurve : MonoBehaviour
             {
                 if (curvePoints[i] != curvePoints[i + 1])
                 {
-                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i], NormalsTab);
-                }
-            }
-            else
-            {
 
+                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i], NormalsTab, cloudPointContainer);
+
+                }
             }
         }
         clearGM();
         GetCloudPoint();
+        Extrusion.Instance.CreateFace();
     }
 
     private void GetCloudPoint()
     {
-        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        for (int i = 0; i <cloudPointContainer.childCount; i++)
         {
-            Transform child = GameManager.Instance.transform.GetChild(i);
+            Transform child =cloudPointContainer.GetChild(i);
             CloudsPoints.Add(child.position);
         }
     }
@@ -98,7 +99,6 @@ public class BezierCurve : MonoBehaviour
         for (int i = 0; i < controlPoints.Count; i++)
         {
             Vector3 v = controlPoints[i];
-            v.z = .1f;
             controlLr.SetPosition(i, v);
         }
     }
@@ -127,9 +127,9 @@ public class BezierCurve : MonoBehaviour
         CloudsPoints = new List<Vector3>();
 
         ControlPointController cp;
-        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        for (int i = 0; i <cloudPointContainer.childCount; i++)
         {
-            if (GameManager.Instance.transform.GetChild(i).TryGetComponent(out cp))
+            if (cloudPointContainer.GetChild(i).TryGetComponent(out cp))
             {
                 cp.Destroy();
             }
@@ -219,6 +219,7 @@ public class BezierCurve : MonoBehaviour
 
     public void DrawCurve(bool RemoveControl = true)
     {
+        Debug.Log("when is this called");
         if (controlPoints != null && controlPoints.Count > 0)
         {
             if (RemoveControl)
@@ -275,31 +276,31 @@ public class BezierCurve : MonoBehaviour
     }
     private void clearGM()
     {
-        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        for (int i = 0; i <cloudPointContainer.childCount; i++)
         {
-            Transform child = GameManager.Instance.transform.GetChild(i);
+            Transform child =cloudPointContainer.GetChild(i);
             for (int j = 0; j < child.childCount; j++)
             {
                 Transform grandChild = child.GetChild(j);
-                grandChild.parent = GameManager.Instance.transform;
+                grandChild.parent =cloudPointContainer;
             }
 
-            Transform child2 = GameManager.Instance.transform.GetChild(i);
+            Transform child2 =cloudPointContainer.GetChild(i);
             for (int j = 0; j < child2.childCount; j++)
             {
                 Transform grandChild = child2.GetChild(j);
-                grandChild.parent = GameManager.Instance.transform;
+                grandChild.parent =cloudPointContainer;
             }
-            Transform child3 = GameManager.Instance.transform.GetChild(i);
+            Transform child3 =cloudPointContainer.GetChild(i);
             for (int j = 0; j < child3.childCount; j++)
             {
                 Transform grandChild = child3.GetChild(j);
-                grandChild.parent = GameManager.Instance.transform;
+                grandChild.parent =cloudPointContainer;
             }
         }
-        for (int i = 0; i < GameManager.Instance.transform.childCount; i++)
+        for (int i = 0; i <cloudPointContainer.childCount; i++)
         {
-            Transform child = GameManager.Instance.transform.GetChild(i);
+            Transform child =cloudPointContainer.GetChild(i);
             if (child.name == "Container(Clone)")
             {
                 child.GetComponent<ControlPointController>().Destroy();

@@ -1,5 +1,18 @@
 # Bezier-curve
-Bézier curve
+
+# Controls
+- Click gauche dans le vide : placer un point dans la scene
+- Click gauche continue sur un point de controle : Déplacer le point de control
+- Click droits continue : Déplace la camera autour du point (0,0,0)
+- num pad + et - : change de courbe quand il y en a plusieurs
+- Supprimer : Supprime la courbe courrante
+## Transform
+- Rotate X : up / down arrow 
+- Rotate Y : Right / left arrow
+- Rotate Z : up / down arrow 
+- Translate :  up / down / Right / left arrow 
+- Scale : up / down arrow 
+- Shear : up / down arrow 
 
 # Step1
 
