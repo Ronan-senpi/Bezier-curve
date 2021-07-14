@@ -21,7 +21,9 @@ public class BezierCurve : MonoBehaviour
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
     public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
     public List<Vector3> CloudsPoints { get; private set; } = new List<Vector3>();
-    public List<Vector3[]> NormalsTab = new List<Vector3[]>();
+    public Transform CloudPointContainer { get => cloudPointContainer; set => cloudPointContainer = value; }
+
+    public List<Vector3> NormalsTab = new List<Vector3>();
 
     
     [SerializeField]
@@ -74,14 +76,14 @@ public class BezierCurve : MonoBehaviour
                 //if (curvePoints[i] != curvePoints[i + 1])
                 {
 
-                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i], NormalsTab, cloudPointContainer);
+                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i],/* NormalsTab,*/ cloudPointContainer);
 
                 }
             }
         }
         //clearGM();
         GetCloudPoint();
-        Extrusion.Instance.CreateFace();
+        Extrusion.Instance.CreateFace(NormalsTab);
     }
 
     private void GetCloudPoint()
@@ -143,10 +145,12 @@ public class BezierCurve : MonoBehaviour
                 cp.Destroy();
             }
         }
+        NormalsTab = new List<Vector3>();
     }
 
     private void Update()
     {
+        
         if (Input.GetMouseButtonUp(0))
         {
             dragControlPointIndex = null;
@@ -222,18 +226,18 @@ public class BezierCurve : MonoBehaviour
             }
         }
 
+
         DragControlPoint();
     }
 
-
     public void DrawCurve(bool RemoveControl = true)
     {
-        Debug.Log("when is this called");
+        //Debug.Log("when is this called");
         if (controlPoints != null && controlPoints.Count > 0)
         {
+            curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(new List<Vector3>(controlPoints), GameManager.Instance.Step).Distinct().ToList();
             if (RemoveControl)
                 RemoveCurvePoint();
-            curvePoints = DeCasteljauAlgorithmUtils.CalculateCurvePoints(new List<Vector3>(controlPoints), GameManager.Instance.Step).Distinct().ToList();
             if (RemoveControl)
                 ShowControlPoint();
             if (controlPoints.Count > 1)
@@ -259,7 +263,7 @@ public class BezierCurve : MonoBehaviour
             dragControlPointIndex.transform.position = GetWorldPos();
             controlLr.SetPosition(dragControlPointIndex.Index, GetWorldPos());
             controlPoints[dragControlPointIndex.Index] = GetWorldPos();
-            DrawCurve(false);
+            //DrawCurve(false);
         }
     }
 

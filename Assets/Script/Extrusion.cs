@@ -26,7 +26,7 @@ public class Extrusion : MonoBehaviour
     private GameObject container;
     int profileNbPoint = 3;
 
-    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation, List<Vector3[]> NormalsTab, Transform container)
+    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation, Transform container)
     {
         GameObject cont = null;
         List<Vector3> vs = new List<Vector3>();
@@ -50,15 +50,6 @@ public class Extrusion : MonoBehaviour
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
-
-        //TO DO : TA MERE
-        Vector3[] normals = new Vector3[vs.Count];
-        for (int i = 0; i < vs.Count - 1; i++)
-        {
-            normals[i] = Vector3.Cross(vs[i], vs[i + 1]);
-        }
-        
-        NormalsTab.Add(normals);
         
         return vs;
     }
@@ -70,10 +61,10 @@ public class Extrusion : MonoBehaviour
         {
             Debug.Log("Game Manager Children : " + GameManager.Instance.transform.childCount);
             Debug.Log("Cloud points Count : " + GameManager.Instance.listCurves[GameManager.Instance.selectedCurve].CloudsPoints.Count);
-            CreateFace();
+            CreateFace(GameManager.Instance.listCurves[GameManager.Instance.selectedCurve].NormalsTab);
         }
     }
-    public void CreateFace()
+    public void CreateFace(List<Vector3> NormalsTab)
     {
         BezierCurve curveToDraw = GameManager.Instance.listCurves[GameManager.Instance.selectedCurve];
 
@@ -82,38 +73,59 @@ public class Extrusion : MonoBehaviour
 
         List<int> indices = new List<int>();
 
+        Debug.Log((profileNbPoint - 1) * ((curveToDraw.CloudsPoints.Count / profileNbPoint) - 1));
+
         for (int i = 0; i < profileNbPoint - 1; i++)
         {
             for (int j = 0; j < (curveToDraw.CloudsPoints.Count / profileNbPoint) - 1; j++)
             {
                 //backface
                 indices.Add(i * profileNbPoint + j);
-                indices.Add(i * profileNbPoint + j + 1);
-                indices.Add((i + 1) * profileNbPoint + j + 1);
                 indices.Add((i + 1) * profileNbPoint + j);
+                indices.Add((i + 1) * profileNbPoint + j + 1);
+                indices.Add(i * profileNbPoint + j + 1);
 
                 //frontface
                 indices.Add(i * profileNbPoint + j);
-                indices.Add((i + 1) * profileNbPoint + j);
-                indices.Add((i + 1) * profileNbPoint + j + 1);
                 indices.Add(i * profileNbPoint + j + 1);
+                indices.Add((i + 1) * profileNbPoint + j + 1);
+                indices.Add((i + 1) * profileNbPoint + j);
 
                 //indices.Add(i + j * profileNbPoint);
                 //indices.Add(i + (j + 1) * profileNbPoint);
                 //indices.Add((i + 1) + (j + 1) * profileNbPoint);
                 //indices.Add((i + 1) + j * profileNbPoint);
-            }
 
+            }
+        }
+
+        for(int i = 0; i < curveToDraw.CloudPointContainer.childCount; i++)
+        {
+            for(int j = 0; j < profileNbPoint+1; j++)
+            {
+                
+                Vector3 v1 = transform.TransformPoint(curveToDraw.CloudPointContainer.GetChild(i).GetChild(j).position);
+                Vector3 v2 = new Vector3();
+                if (j == profileNbPoint)
+                    v2 = transform.TransformPoint(curveToDraw.CloudPointContainer.GetChild(i).GetChild(0).position);
+                else
+                {
+                    v2 = transform.TransformPoint(curveToDraw.CloudPointContainer.GetChild(i).GetChild(j + 1).position);
+                }
+                    
+                Vector3 n = Vector3.Cross(v2, v1);
+
+                NormalsTab.Add(n);
+                //Debug.DrawRay(transform.TransformPoint(curveToDraw.CloudPointContainer.GetChild(i).GetChild(j).position), n * 2, Color.magenta, 1000000);
+            }
         }
 
         mesh.SetVertices(curveToDraw.CloudsPoints.ToArray());
         mesh.SetIndices(indices.ToArray(), MeshTopology.Quads, 0);
         //mesh.RecalculateNormals();
-        for(int i = 0; i < curveToDraw.NormalsTab.Count; i++)
-        {
-            mesh.SetNormals(curveToDraw.NormalsTab[i]);
-        }
+        mesh.SetNormals(curveToDraw.NormalsTab);
         Debug.Log("size vertices:" + mesh.vertices.Length);
+        Debug.Log("size cloud points:" + curveToDraw.CloudsPoints.Count);
         Debug.Log("size tab normals:" + curveToDraw.NormalsTab.Count);
     }
 }
