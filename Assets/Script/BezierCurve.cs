@@ -15,15 +15,17 @@ public class BezierCurve : MonoBehaviour
     [SerializeField]
     private LayerMask controlPointLayer;
     private ControlPointController dragControlPointIndex;
+
     private List<Vector3> curvePoints;
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
     public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
     public List<Vector3> CloudsPoints { get; private set; } = new List<Vector3>();
+
     
     [SerializeField]
     private Tangente tan;
+    private bool CloseCurve = false;
 
-    public bool OpenCurve = true;
 
     private void Awake()
     {
@@ -68,8 +70,12 @@ public class BezierCurve : MonoBehaviour
             {
                 if (curvePoints[i] != curvePoints[i + 1])
                 {
-                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], true, tan.tan[i]);
+                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i]);
                 }
+            }
+            else
+            {
+
             }
         }
         clearGM();
