@@ -27,10 +27,10 @@ public class Extrusion : MonoBehaviour
     int profileNbPoint = 3;
 
 
-    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation, Transform container)
+    public void CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation,  Transform container)
+
     {
         GameObject cont = null;
-        Debug.Log(profileNbPoint);
         List<Vector3> vs = new List<Vector3>();
 
         cont = Instantiate(this.container, location, Quaternion.identity, container);
@@ -49,13 +49,10 @@ public class Extrusion : MonoBehaviour
         }
         if (firstPoint.HasValue && closeProfile)
         {
-            Debug.Log("FERME TOI BRO");
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
         cont.transform.rotation = Quaternion.LookRotation(rotation);
-
-        return vs;
     }
 
     private void Update()
@@ -63,6 +60,8 @@ public class Extrusion : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            Debug.Log("Game Manager Children : " + GameManager.Instance.transform.childCount);
+            Debug.Log("Cloud points Count : " + GameManager.Instance.listCurves[GameManager.Instance.selectedCurve].CloudsPoints.Count);
             CreateFace();
         }
     }
