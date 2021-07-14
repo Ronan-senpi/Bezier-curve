@@ -32,6 +32,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material selectMaterial;
     [SerializeField] private Material unselectMaterial;
     [SerializeField] private Slider sliderStep;
+
+    public BezierCurve GetCurrentCurve()
+    {
+        return listCurves[selectedCurve];
+    }
+
     public void SaveCurveAndStartNew()
     {
         BezierCurve currentCurve = Instantiate(bezierCurvePrefab, new Vector3(0, 0, 0), Quaternion.identity).GetComponent<BezierCurve>();
