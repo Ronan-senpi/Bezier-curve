@@ -52,21 +52,23 @@ public class Extrusion : MonoBehaviour
         }
         
         cont.transform.forward = rotation;
-        
-        if(cont.transform.rotation.x < 0 && cont.transform.rotation.y < 0) { 
-            cont.transform.forward = -rotation;
+
+        if (cont.transform.rotation.x < 0 && cont.transform.rotation.y < 0)
+        {
+            cont.transform.forward = new Vector3(-rotation.x, -rotation.y, rotation.z);
         }
-        else if(cont.transform.rotation.x < 0)
+        
+        if (cont.transform.rotation.x < 0)
         {
             cont.transform.forward = new Vector3(-rotation.x, rotation.y, rotation.z);
         }
         else if(cont.transform.rotation.y < 0)
         {
-            cont.transform.forward = new Vector3(-rotation.x, -rotation.y, rotation.z);
+            cont.transform.forward = new Vector3(rotation.x, -rotation.y, rotation.z);
         }
 
-        Vector3[] normals = new Vector3[profileNbPoint];
-        for (int i = 0; i < profileNbPoint-1; i++)
+        Vector3[] normals = new Vector3[vs.Count];
+        for (int i = 0; i < vs.Count - 1; i++)
         {
             normals[i] = Vector3.Cross(vs[i], vs[i + 1]);
         }
@@ -74,7 +76,6 @@ public class Extrusion : MonoBehaviour
         NormalsTab.Add(normals);
         
         return vs;
-        cont.transform.rotation = Quaternion.LookRotation(rotation);
     }
 
     private void Update()

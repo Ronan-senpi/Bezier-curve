@@ -71,7 +71,7 @@ public class BezierCurve : MonoBehaviour
             curveLr.SetPosition(i, curvePoints[i]);
             if (i + 1 < curvePoints.Count)
             {
-                if (curvePoints[i] != curvePoints[i + 1])
+                //if (curvePoints[i] != curvePoints[i + 1])
                 {
 
                     Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i], NormalsTab, cloudPointContainer);
