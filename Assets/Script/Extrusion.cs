@@ -26,8 +26,7 @@ public class Extrusion : MonoBehaviour
     private GameObject container;
     int profileNbPoint = 3;
 
-
-    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation)
+    public List<Vector3> CreatePointsForStep(Vector3 location, Vector3 nextLocation, bool closeProfile, Vector3 rotation, List<Vector3[]> NormalsTab)
     {
         GameObject cont = null;
         Debug.Log(profileNbPoint);
@@ -49,12 +48,32 @@ public class Extrusion : MonoBehaviour
         }
         if (firstPoint.HasValue && closeProfile)
         {
-            Debug.Log("FERME TOI BRO");
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
-        cont.transform.rotation = Quaternion.LookRotation(rotation);
+        
+        cont.transform.forward = rotation;
+        
+        if(cont.transform.rotation.x < 0 && cont.transform.rotation.y < 0) { 
+            cont.transform.forward = -rotation;
+        }
+        else if(cont.transform.rotation.x < 0)
+        {
+            cont.transform.forward = new Vector3(-rotation.x, rotation.y, rotation.z);
+        }
+        else if(cont.transform.rotation.y < 0)
+        {
+            cont.transform.forward = new Vector3(-rotation.x, -rotation.y, rotation.z);
+        }
 
+        Vector3[] normals = new Vector3[profileNbPoint];
+        for (int i = 0; i < profileNbPoint-1; i++)
+        {
+            normals[i] = Vector3.Cross(vs[i], vs[i + 1]);
+        }
+        
+        NormalsTab.Add(normals);
+        
         return vs;
     }
 
@@ -101,6 +120,12 @@ public class Extrusion : MonoBehaviour
 
         mesh.SetVertices(curveToDraw.CloudsPoints.ToArray());
         mesh.SetIndices(indices.ToArray(), MeshTopology.Quads, 0);
-        mesh.RecalculateNormals();
+        //mesh.RecalculateNormals();
+        for(int i = 0; i < curveToDraw.NormalsTab.Count; i++)
+        {
+            mesh.SetNormals(curveToDraw.NormalsTab[i]);
+        }
+        Debug.Log("size vertices:" + mesh.vertices.Length);
+        Debug.Log("size tab normals:" + curveToDraw.NormalsTab.Count);
     }
 }

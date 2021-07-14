@@ -20,6 +20,7 @@ public class BezierCurve : MonoBehaviour
     public List<Vector3> ControlPoints { get => controlPoints; set => controlPoints = value; }
     public List<Vector3> CurvePoints { get => curvePoints; set => curvePoints = value; }
     public List<Vector3> CloudsPoints { get; private set; } = new List<Vector3>();
+    public List<Vector3[]> NormalsTab = new List<Vector3[]>();
 
     
     [SerializeField]
@@ -70,7 +71,7 @@ public class BezierCurve : MonoBehaviour
             {
                 if (curvePoints[i] != curvePoints[i + 1])
                 {
-                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i]);
+                    Extrusion.Instance.CreatePointsForStep(curvePoints[i], curvePoints[i + 1], CloseCurve, tan.tan[i], NormalsTab);
                 }
             }
             else
