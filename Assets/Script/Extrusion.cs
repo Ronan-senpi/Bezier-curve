@@ -49,6 +49,7 @@ public class Extrusion : MonoBehaviour
         }
         if (firstPoint.HasValue && closeProfile)
         {
+            Debug.Log("FERME TOI BRO");
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
@@ -76,7 +77,7 @@ public class Extrusion : MonoBehaviour
 
         for (int i = 0; i < profileNbPoint - 1; i++)
         {
-            for (int j = 0; j < curveToDraw.CurvePoints.Count - 1; j++)
+            for (int j = 0; j < (curveToDraw.CloudsPoints.Count / profileNbPoint) - 1; j++)
             {
                 //backface
                 //indices.Add(i * profileNbPoint + j);
@@ -85,15 +86,15 @@ public class Extrusion : MonoBehaviour
                 //indices.Add((i + 1) * profileNbPoint + j);
 
                 //frontface
-                //indices.Add(i * profileNbPoint + j);
-                //indices.Add((i + 1) * profileNbPoint + j);
-                //indices.Add((i + 1) * profileNbPoint + j + 1);
-                //indices.Add(i * profileNbPoint + j + 1);
+                indices.Add(i * profileNbPoint + j);
+                indices.Add((i + 1) * profileNbPoint + j);
+                indices.Add((i + 1) * profileNbPoint + j + 1);
+                indices.Add(i * profileNbPoint + j + 1);
 
-                indices.Add(i + j * profileNbPoint);
-                indices.Add(i + (j + 1) * profileNbPoint);
-                indices.Add((i + 1) + (j + 1) * profileNbPoint);
-                indices.Add((i + 1) + j * profileNbPoint);
+                //indices.Add(i + j * profileNbPoint);
+                //indices.Add(i + (j + 1) * profileNbPoint);
+                //indices.Add((i + 1) + (j + 1) * profileNbPoint);
+                //indices.Add((i + 1) + j * profileNbPoint);
             }
 
         }

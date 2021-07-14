@@ -15,7 +15,5 @@ public class Tangente : MonoBehaviour
             Vector3 point = curve.CurvePoints[i + 1] - curve.CurvePoints[i - 1];
             tan.Add(point);
         }
-
-        Debug.Log("Size of List<Tan>: " + tan.Count);
     }
 }
