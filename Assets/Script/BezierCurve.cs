@@ -150,7 +150,13 @@ public class BezierCurve : MonoBehaviour
 
     private void Update()
     {
-        
+        Matrix4x4 m = new Matrix4x4(new Vector4(1,2,5,6), new Vector4(8, 0, 4, 0), new Vector4(6,2,4,7), new Vector4(8,9,2,1));
+        Vector3 ouais = new Vector3(4, 5, 9);
+        Vector4 quatre = new Vector4(4, 5, 9, 1);
+
+        Vector3 res = m.MultiplyPoint(ouais);
+        Vector3 res2 = m.MultiplyVector(ouais);
+
         if (Input.GetMouseButtonUp(0))
         {
             dragControlPointIndex = null;

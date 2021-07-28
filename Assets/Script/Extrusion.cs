@@ -50,20 +50,9 @@ public class Extrusion : MonoBehaviour
             Instantiate(cube, firstPoint.Value, Quaternion.identity, cont.transform);
             vs.Add(firstPoint.Value);
         }
-        
         return vs;
     }
 
-    private void Update()
-    {
-
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("Game Manager Children : " + GameManager.Instance.transform.childCount);
-            Debug.Log("Cloud points Count : " + GameManager.Instance.listCurves[GameManager.Instance.selectedCurve].CloudsPoints.Count);
-            CreateFace(GameManager.Instance.listCurves[GameManager.Instance.selectedCurve].NormalsTab);
-        }
-    }
     public void CreateFace(List<Vector3> NormalsTab)
     {
         BezierCurve curveToDraw = GameManager.Instance.listCurves[GameManager.Instance.selectedCurve];
@@ -72,8 +61,6 @@ public class Extrusion : MonoBehaviour
         meshFilter.mesh = mesh;
 
         List<int> indices = new List<int>();
-
-        Debug.Log((profileNbPoint - 1) * ((curveToDraw.CloudsPoints.Count / profileNbPoint) - 1));
 
         for (int i = 0; i < profileNbPoint - 1; i++)
         {
@@ -90,12 +77,6 @@ public class Extrusion : MonoBehaviour
                 indices.Add(i * profileNbPoint + j + 1);
                 indices.Add((i + 1) * profileNbPoint + j + 1);
                 indices.Add((i + 1) * profileNbPoint + j);
-
-                //indices.Add(i + j * profileNbPoint);
-                //indices.Add(i + (j + 1) * profileNbPoint);
-                //indices.Add((i + 1) + (j + 1) * profileNbPoint);
-                //indices.Add((i + 1) + j * profileNbPoint);
-
             }
         }
 
@@ -103,7 +84,6 @@ public class Extrusion : MonoBehaviour
         {
             for(int j = 0; j < profileNbPoint+1; j++)
             {
-                
                 Vector3 v1 = transform.TransformPoint(curveToDraw.CloudPointContainer.GetChild(i).GetChild(j).position);
                 Vector3 v2 = new Vector3();
                 if (j == profileNbPoint)
@@ -114,18 +94,13 @@ public class Extrusion : MonoBehaviour
                 }
                     
                 Vector3 n = Vector3.Cross(v2, v1);
-
                 NormalsTab.Add(n);
-                //Debug.DrawRay(transform.TransformPoint(curveToDraw.CloudPointContainer.GetChild(i).GetChild(j).position), n * 2, Color.magenta, 1000000);
             }
         }
 
         mesh.SetVertices(curveToDraw.CloudsPoints.ToArray());
         mesh.SetIndices(indices.ToArray(), MeshTopology.Quads, 0);
-        //mesh.RecalculateNormals();
         mesh.SetNormals(curveToDraw.NormalsTab);
-        Debug.Log("size vertices:" + mesh.vertices.Length);
-        Debug.Log("size cloud points:" + curveToDraw.CloudsPoints.Count);
-        Debug.Log("size tab normals:" + curveToDraw.NormalsTab.Count);
+
     }
 }
