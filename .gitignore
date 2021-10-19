@@ -62,3 +62,5 @@ ProjectSettings/ProjectVersion.txt
 Assets/Resources.meta
 Assets/Resources/BillingMode.json
 Assets/Resources/BillingMode.json.meta
+
+.idea/

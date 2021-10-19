@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+//Marche de Jarvis
 public static class GiftWrappingAlgorithm
 {
     public static List<Vector3> CalculateConvexHull(List<Vector3> points)
@@ -38,7 +39,7 @@ public static class GiftWrappingAlgorithm
         return points.Where(p => p.x == (points.Min(y => y.x))).First();
     }
 
-    public static float counterclockwise(Vector3 p1, Vector3 p2, Vector3 p3)
+    private static float counterclockwise(Vector3 p1, Vector3 p2, Vector3 p3)
     {
         return Mathf.Sign((p2.x - p1.x) * (p3.y - p1.y) - (p3.x - p1.x) * (p2.y - p1.y));
     }
